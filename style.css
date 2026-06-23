@@ -1,0 +1,113 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Segoe UI, Arial, sans-serif;
+    background: #f5f5f5;
+}
+
+header {
+    background: #004025;
+    color: white;
+    padding: 20px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header h1 {
+    font-size: 28px;
+}
+
+#hora {
+    font-size: 26px;
+    font-weight: bold;
+}
+
+.container {
+    padding: 10px;
+
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 10px;
+
+    height: calc(100vh - 130px);
+}
+
+.coluna {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+
+    box-shadow: 0 2px 8px rgba(0,0,0,.15);
+}
+
+.coluna h2 {
+    color: white;
+    text-align: center;
+    padding: 15px;
+    font-size: 22px;
+}
+
+.posto h2 {
+    background: #E3DCC9;
+    color: #333;
+}
+
+.alca h2 {
+    background: #00A262;
+}
+
+.banheiro h2 {
+    background: #67DF88;
+    color: #333;
+}
+
+.usina h2 {
+    background: #59392C;
+}
+
+.patio h2 {
+    background: #C0693A;
+}
+
+.omc h2 {
+    background: #004025;
+}
+
+.card {
+    background: white;
+
+    margin: 8px;
+    padding: 12px;
+
+    border-radius: 8px;
+
+    font-size: 26px;
+    font-weight: bold;
+
+    text-align: center;
+
+    border-left: 6px solid #00A262;
+
+    box-shadow: 0 1px 5px rgba(0,0,0,.15);
+}
+
+.card:hover {
+    transform: scale(1.03);
+}
+
+footer {
+    height: 40px;
+    display: flex;
+    align-items: center;
+
+    padding-left: 20px;
+
+    background: #e9eef3;
+    color: #333;
+}
