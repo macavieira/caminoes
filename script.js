@@ -1,51 +1,88 @@
-const URL_API =
-"https://script.google.com/macros/s/SEU_ID_AQUI/exec";
+const CSV_URL =
+'https://docs.google.com/spreadsheets/d/1RgV1cfvm_G5os9_jz04rHy8-doMnRldh2CdSrFny6CI/export?format=csv&gid=0';
 
 async function carregarDados() {
 
     try {
 
-        const resposta = await fetch(URL_API);
+        const resposta = await fetch(CSV_URL + '&t=' + new Date().getTime());
 
-        const dados = await resposta.json();
+        const csv = await resposta.text();
 
         document
-            .querySelectorAll(".coluna > div")
-            .forEach(el => el.innerHTML = "");
+            .querySelectorAll('.coluna > div')
+            .forEach(el => el.innerHTML = '');
 
-        dados.forEach(item => {
+        const linhas = csv.split('\n');
 
-            const card = document.createElement("div");
+        linhas.shift();
 
-            card.className = "card";
+        linhas.forEach(linha => {
 
-            card.innerHTML = `
-                🚛 ${item.frota}
-            `;
+            if (!linha.trim()) return;
 
-            const local =
-                document.getElementById(item.local);
+            const [frota, local] = linha.split(',');
 
-            if(local){
-                local.appendChild(card);
+            const localNormalizado =
+                local
+                    .trim()
+                    .normalize("NFD")
+                    .replace(/[\u0300-\u036f]/g, "")
+                    .toUpperCase();
+
+            const card = document.createElement('div');
+
+            card.className = 'card';
+            card.innerHTML = `🚛 ${frota.trim()}`;
+
+            let destino = null;
+
+            switch(localNormalizado){
+
+                case 'POSTO':
+                    destino = document.getElementById('POSTO');
+                    break;
+
+                case 'ALCA':
+                    destino = document.getElementById('ALÇA');
+                    break;
+
+                case 'PATIO':
+                    destino = document.getElementById('PÁTIO');
+                    break;
+
+                case 'USINA':
+                    destino = document.getElementById('USINA');
+                    break;
+
+                case 'OMC':
+                case 'O.M.C':
+                    destino = document.getElementById('O.M.C');
+                    break;
+
+                case 'FILA BANHEIRO':
+                    destino = document.getElementById('FILA BANHEIRO');
+                    break;
+            }
+
+            if(destino){
+                destino.appendChild(card);
             }
 
         });
 
+    } catch (erro) {
+
+        console.error('Erro ao carregar dados:', erro);
+
     }
-    catch(erro){
-
-        console.error(erro);
-
-    }
-
 }
 
 function atualizarHora() {
 
     const agora = new Date();
 
-    document.getElementById("hora").innerHTML =
+    document.getElementById('hora').innerHTML =
         agora.toLocaleTimeString('pt-BR');
 
 }
