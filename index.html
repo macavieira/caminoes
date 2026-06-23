@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<meta charset="UTF-8">
+
+<title>Localização Caminhões</title>
+
+<style>
+
+body{
+font-family:Arial;
+margin:0;
+background:#f5f5f5;
+}
+
+header{
+background:#004025;
+color:white;
+padding:20px;
+text-align:center;
+}
+
+.container{
+display:grid;
+grid-template-columns:repeat(6,1fr);
+gap:10px;
+padding:10px;
+}
+
+.coluna{
+background:white;
+border-radius:10px;
+padding:10px;
+}
+
+.card{
+background:#eee;
+padding:10px;
+margin-bottom:5px;
+border-radius:5px;
+font-size:22px;
+font-weight:bold;
+text-align:center;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+<h1>LOCALIZAÇÃO DOS CAMINHÕES</h1>
+
+</header>
+
+<div class="container">
+
+<div class="coluna">
+<h2>POSTO</h2>
+<div id="POSTO"></div>
+</div>
+
+<div class="coluna">
+<h2>ALÇA</h2>
+<div id="ALÇA"></div>
+</div>
+
+<div class="coluna">
+<h2>FILA BANHEIRO</h2>
+<div id="FILA BANHEIRO"></div>
+</div>
+
+<div class="coluna">
+<h2>USINA</h2>
+<div id="USINA"></div>
+</div>
+
+<div class="coluna">
+<h2>PÁTIO</h2>
+<div id="PÁTIO"></div>
+</div>
+
+<div class="coluna">
+<h2>O.M.C</h2>
+<div id="O.M.C"></div>
+</div>
+
+</div>
+
+<script>
+
+const URL_API =
+"https://script.google.com/macros/s/SEU_ID_AQUI/exec";
+
+async function carregar(){
+
+const resposta =
+await fetch(URL_API);
+
+const dados =
+await resposta.json();
+
+document
+.querySelectorAll(".coluna div")
+.forEach(el => el.innerHTML = "");
+
+dados.forEach(item => {
+
+const card =
+document.createElement("div");
+
+card.className="card";
+card.innerText=item.frota;
+
+document
+.getElementById(item.local)
+.appendChild(card);
+
+});
+
+}
+
+carregar();
+
+setInterval(carregar,5000);
+
+</script>
+
+</body>
+
+</html>
